@@ -227,7 +227,7 @@ public class BaiduDataSource implements DataSource {
             String resultCssQuery = "html > body > div > div > div > div > div";
             Elements elements = document.select(resultCssQuery);
             for (Element element : elements) {
-                Elements subElements = element.select("h3 > a");
+                Elements subElements = element.select("h3");
                 if(subElements.size() != 1){
                     LOG.debug("没有找到标题");
                     continue;
@@ -237,7 +237,7 @@ public class BaiduDataSource implements DataSource {
                     LOG.debug("标题为空");
                     continue;
                 }
-                subElements = element.select("div.c-abstract");
+                subElements = element.select("span.content-right_8Zs40");
                 if(subElements.size() != 1){
                     LOG.debug("没有找到摘要");
                     continue;

@@ -23,6 +23,7 @@ package org.apdplat.qa.api;
 import edu.stanford.nlp.util.StringUtils;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -64,6 +65,10 @@ public class AskServlet extends HttpServlet {
         if(n != null && StringUtils.isNumeric(n)){
             topN = Integer.parseInt(n);
         }
+
+        byte[] bytes = questionStr.getBytes(StandardCharsets.ISO_8859_1);
+        questionStr = new String(bytes,StandardCharsets.UTF_8);
+
         Question question = null;
         List<CandidateAnswer> candidateAnswers = null;
         if (questionStr != null && questionStr.trim().length() > 3) {

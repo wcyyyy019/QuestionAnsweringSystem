@@ -73,15 +73,16 @@ public class AskServlet extends HttpServlet {
         List<CandidateAnswer> candidateAnswers = null;
         if (questionStr != null && questionStr.trim().length() > 3) {
             question = SharedQuestionAnsweringSystem.getInstance().answerQuestion(questionStr);
-            if (question != null) {
-                candidateAnswers = question.getAllCandidateAnswer();
-            }
+//            if (question != null) {
+//                candidateAnswers = question.getAllCandidateAnswer();
+//            }
         }
         LOG.info("问题："+questionStr); 
         try (PrintWriter out = response.getWriter()) {
-            String json = JsonGenerator.generate(candidateAnswers, topN);
-            out.println(json);
-            LOG.info("答案："+json);
+            out.println(question.toString());
+//            String json = JsonGenerator.generate(candidateAnswers, topN);
+//            out.println(json);
+//            LOG.info("答案："+json);
         }
     }
 

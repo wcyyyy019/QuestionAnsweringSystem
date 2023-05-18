@@ -82,6 +82,11 @@ public class FileDataSource implements DataSource {
     }
 
     @Override
+    public Question answerQuestionOnlyReturnEvidence(String questionStr, QuestionAnsweringSystem questionAnsweringSystem) {
+        return null;
+    }
+
+    @Override
     public List<Question> getAndAnswerQuestions(QuestionAnsweringSystem questionAnsweringSystem) {
         List<Question> questions = new ArrayList<>();
 

@@ -219,6 +219,11 @@ public class GoogleDataSource implements DataSource {
         return question;
     }
 
+    @Override
+    public Question answerQuestionOnlyReturnEvidence(String questionStr, QuestionAnsweringSystem questionAnsweringSystem) {
+        return null;
+    }
+
     private List<Evidence> search(String query) {
         List<Evidence> evidences = new ArrayList<>();
         try {

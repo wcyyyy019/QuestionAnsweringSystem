@@ -64,4 +64,12 @@ public interface DataSource {
      */
     public Question getAndAnswerQuestion(String questionStr, QuestionAnsweringSystem questionAnsweringSystem);
 
+    /**
+     * 获取问题仅返回搜索结果
+     * @param questionStr
+     * @param questionAnsweringSystem
+     * @return
+     */
+    public Question answerQuestionOnlyReturnEvidence(String questionStr, QuestionAnsweringSystem questionAnsweringSystem);
+
 }

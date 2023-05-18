@@ -212,6 +212,56 @@ public class BaiduDataSource implements DataSource {
         return question;
     }
 
+    @Override
+    public Question answerQuestionOnlyReturnEvidence(String questionStr, QuestionAnsweringSystem questionAnsweringSystem) {
+        //1、先从本地缓存里面找
+        Question question = MySQLUtils.getQuestionFromDatabase("baidu:", questionStr);
+        if (question != null) {
+            //数据库中存在
+            LOG.info("从数据库中查询到Question：" + question.getQuestion());
+            //回答问题
+            if (questionAnsweringSystem != null) {
+                questionAnsweringSystem.answerQuestion(question);
+            }
+            return question;
+        }
+        //2、本地缓存里面没有再查询baidu
+        question = new Question();
+        question.setQuestion(questionStr);
+
+        String query = "";
+        try {
+            query = URLEncoder.encode(question.getQuestion(), "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            LOG.error("url构造失败", e);
+            return null;
+        }
+        String referer = "http://www.baidu.com/";
+        for (int i = 0; i < PAGE; i++) {
+            query = "http://www.baidu.com/s?tn=monline_5_dg&ie=utf-8&wd=" + query+"&oq="+query+"&usm=3&f=8&bs="+query+"&rsv_bp=1&rsv_sug3=1&rsv_sug4=141&rsv_sug1=1&rsv_sug=1&pn=" + i * PAGESIZE;
+            LOG.debug(query);
+            List<Evidence> evidences = searchBaidu(query, referer);
+            referer = query;
+            if (evidences != null && evidences.size() > 0) {
+                question.addEvidences(evidences);
+            } else {
+                LOG.error("结果页 " + (i + 1) + " 没有搜索到结果");
+                break;
+            }
+        }
+        LOG.info("Question：" + question.getQuestion() + " 搜索到Evidence " + question.getEvidences().size() + " 条");
+        if (question.getEvidences().isEmpty()) {
+            return null;
+        }
+        //3、将baidu查询结果加入本地缓存
+        if (question.getEvidences().size() > 7) {
+            LOG.info("将Question：" + question.getQuestion() + " 加入MySQL数据库");
+            MySQLUtils.saveQuestionToDatabase("baidu:", question);
+        }
+
+        return question;
+    }
+
     private List<Evidence> searchBaidu(String url, String referer) {
         List<Evidence> evidences = new ArrayList<>();
         try {

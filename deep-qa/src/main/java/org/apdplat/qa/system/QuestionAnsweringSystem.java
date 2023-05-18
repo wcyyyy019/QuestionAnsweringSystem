@@ -96,6 +96,8 @@ public interface QuestionAnsweringSystem {
      */
     public Question answerQuestion(String questionStr);
 
+    public Question answerQuestionOnlyReturnEvidence(String questionStr);
+
     /**
      * 回答指定的问题
      *

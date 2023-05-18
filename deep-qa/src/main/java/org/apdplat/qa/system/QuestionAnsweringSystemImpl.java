@@ -161,6 +161,15 @@ public class QuestionAnsweringSystemImpl implements QuestionAnsweringSystem {
     }
 
     @Override
+    public Question answerQuestionOnlyReturnEvidence(String questionStr) {
+        Question question = dataSource.answerQuestionOnlyReturnEvidence(questionStr, null);
+        if (question != null) {
+            return answerQuestion(question);
+        }
+        return null;
+    }
+
+    @Override
     public List<Question> answerQuestions() {
         return dataSource.getAndAnswerQuestions(this);
     }

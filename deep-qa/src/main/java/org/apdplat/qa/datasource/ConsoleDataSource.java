@@ -132,6 +132,11 @@ public class ConsoleDataSource implements DataSource {
         return null;
     }
 
+    @Override
+    public Question answerQuestionOnlyReturnEvidence(String questionStr, QuestionAnsweringSystem questionAnsweringSystem) {
+        return null;
+    }
+
     /**
      * @param args
      */

@@ -78,14 +78,15 @@ public class JsonGenerator {
         questionAnsweringSystem.setDataSource(new BaiduDataSource());
         String questionStr = "谁死后布了七十二疑冢？";
         Question question = questionAnsweringSystem.answerQuestion(questionStr);
+//        Question question = questionAnsweringSystem.answerQuestionOnlyReturnEvidence(questionStr);
         if (question != null) {
             List<CandidateAnswer> candidateAnswers = question.getAllCandidateAnswer();
             System.out.println(JsonGenerator.generate(candidateAnswers));
-            System.out.println(JsonGenerator.generate(candidateAnswers, 1));
-            System.out.println(JsonGenerator.generate(candidateAnswers, 2));
-            System.out.println(JsonGenerator.generate(candidateAnswers, 9));
-            System.out.println(JsonGenerator.generate(candidateAnswers, 100));
-            System.out.println(JsonGenerator.generate(candidateAnswers.get(0)));
+//            System.out.println(JsonGenerator.generate(candidateAnswers, 1));
+//            System.out.println(JsonGenerator.generate(candidateAnswers, 2));
+//            System.out.println(JsonGenerator.generate(candidateAnswers, 9));
+//            System.out.println(JsonGenerator.generate(candidateAnswers, 100));
+//            System.out.println(JsonGenerator.generate(candidateAnswers.get(0)));
         }
     }
 }
